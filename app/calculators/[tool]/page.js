@@ -11,7 +11,7 @@ export default function CalculatorPage({ params }) {
 
   return (
     <div>
-      <h1>{tool.replace('-', ' ').toUpperCase()}</h1>
+      <h1>{tool}</h1>
     </div>
   );
 }
