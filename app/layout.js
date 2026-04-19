@@ -6,22 +6,41 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: "Arial" }}>
+      <body style={{ margin: 0, fontFamily: "Inter, sans-serif" }}>
         
         {/* HEADER */}
-        <div style={{ background: "#0F2E4E", color: "white", padding: "15px" }}>
-          <h2>PaisaSoch</h2>
-        </div>
+        <header style={{
+          background: "#0F2E4E",
+          color: "#fff",
+          padding: "16px 24px",
+          fontSize: "20px",
+          fontWeight: "600"
+        }}>
+          PaisaSoch
+        </header>
 
-        {/* CONTENT */}
-        <div style={{ padding: "20px", background: "#F5F1E6", minHeight: "80vh" }}>
+        {/* MAIN CONTENT */}
+        <main style={{
+          background: "#F5F1E6",
+          minHeight: "80vh",
+          padding: "40px 20px",
+          maxWidth: "900px",
+          margin: "0 auto",
+          lineHeight: "1.6"
+        }}>
           {children}
-        </div>
+        </main>
 
         {/* FOOTER */}
-        <div style={{ background: "#0F2E4E", color: "white", padding: "15px" }}>
-          <p>© PaisaSoch</p>
-        </div>
+        <footer style={{
+          background: "#0F2E4E",
+          color: "#fff",
+          padding: "20px",
+          textAlign: "center",
+          fontSize: "14px"
+        }}>
+          © 2026 PaisaSoch — Financial Intelligence Platform
+        </footer>
 
       </body>
     </html>
