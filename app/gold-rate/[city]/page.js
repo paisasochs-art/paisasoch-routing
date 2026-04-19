@@ -1,8 +1,8 @@
 export async function generateStaticParams() {
   return [
-    { city: "hyderabad" },
-    { city: "mumbai" },
-    { city: "delhi" }
+    { city: 'hyderabad' },
+    { city: 'mumbai' },
+    { city: 'delhi' }
   ];
 }
 
