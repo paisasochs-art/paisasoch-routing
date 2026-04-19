@@ -1,44 +1,54 @@
 export default function Home() {
   return (
-    <main style={{
-      padding: "40px",
-      fontFamily: "Inter, sans-serif",
-      background: "#F5F1E6",
-      minHeight: "100vh",
-      color: "#0F2E4E"
-    }}>
-
+    <div>
       <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
         PaisaSoch
       </h1>
 
-      <p style={{ marginBottom: "30px" }}>
+      <p style={{ marginBottom: "30px", color: "#555" }}>
         Live Gold Rates, Silver Prices & Financial Calculators
       </p>
 
-      <h2>🔥 Quick Access</h2>
+      {/* QUICK ACCESS */}
+      <section style={{ marginBottom: "40px" }}>
+        <h2 style={{ marginBottom: "15px" }}>🔥 Quick Access</h2>
 
-      <div style={{ marginBottom: "30px" }}>
-        <a href="/gold-rate/hyderabad">Gold Hyderabad</a><br />
-        <a href="/gold-rate/mumbai">Gold Mumbai</a><br />
-        <a href="/silver-rate/hyderabad">Silver Hyderabad</a><br />
-      </div>
+        <div style={{
+          display: "grid",
+          gap: "10px"
+        }}>
+          <a href="/gold-rate/hyderabad">Gold Hyderabad</a>
+          <a href="/gold-rate/mumbai">Gold Mumbai</a>
+          <a href="/silver-rate/hyderabad">Silver Hyderabad</a>
+        </div>
+      </section>
 
-      <h2>📊 Calculators</h2>
+      {/* CALCULATORS */}
+      <section style={{ marginBottom: "40px" }}>
+        <h2 style={{ marginBottom: "15px" }}>📊 Calculators</h2>
 
-      <div style={{ marginBottom: "30px" }}>
-        <a href="/calculators/sip-calculator">SIP Calculator</a><br />
-        <a href="/calculators/emi-calculator">EMI Calculator</a><br />
-        <a href="/calculators/fd-calculator">FD Calculator</a><br />
-      </div>
+        <div style={{
+          display: "grid",
+          gap: "10px"
+        }}>
+          <a href="/calculators/sip-calculator">SIP Calculator</a>
+          <a href="/calculators/emi-calculator">EMI Calculator</a>
+          <a href="/calculators/fd-calculator">FD Calculator</a>
+        </div>
+      </section>
 
-      <h2>📈 About PaisaSoch</h2>
+      {/* ABOUT */}
+      <section style={{
+        background: "#fff",
+        padding: "20px",
+        borderRadius: "8px"
+      }}>
+        <h2>📈 About PaisaSoch</h2>
+        <p style={{ color: "#555" }}>
+          PaisaSoch helps you track gold and silver prices across major Indian cities and provides smart financial calculators.
+        </p>
+      </section>
 
-      <p>
-        PaisaSoch helps you track gold and silver prices across major Indian cities
-        and provides smart financial calculators to plan your investments better.
-      </p>
-
-    </main>
+    </div>
   );
 }
