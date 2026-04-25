@@ -1,4 +1,4 @@
-import { resolveRequest } from "../src/governance/engine";
+import { resolveRequest } from "../../src/governance/engine";
 
 export default async function handler(req, res) {
   try {
