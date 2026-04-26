@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  const url = request.nextUrl.clone();
+  const url = request.nextUrl;
   const path = url.pathname;
 
-  // 👉 Map SEO URL → Lovable URL
+  // GOLD RATE ROUTE
   if (path.startsWith("/gold-rate-today/")) {
     const city = path.split("/")[2];
 
-    // 👇 THIS IS THE KEY CHANGE
-    return NextResponse.rewrite(
-      new URL(`https://www.paisasoch.com/gold-rate-today/${city}`)
+    return NextResponse.redirect(
+      `https://www.paisasoch.com/gold-rate-today/${city}`,
+      301
     );
   }
 
