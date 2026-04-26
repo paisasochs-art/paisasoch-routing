@@ -1,24 +1,20 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname.toLowerCase()
+export function middleware(request) {
+  const url = request.nextUrl.clone();
+  const path = url.pathname;
 
-  // ✅ Allow homepage
-  if (path === '/') {
-    return NextResponse.redirect('https://www.paisasoch.com')
+  // ✅ FIX: map SEO route → actual Next route
+  if (path.startsWith("/gold-rate-today/")) {
+    const city = path.split("/")[2];
+    url.pathname = `/gold-rate/${city}`;
+    return NextResponse.rewrite(url);
   }
 
-  // ✅ Allow gold rate pages
-  if (path.startsWith('/gold-rate-today')) {
-    return NextResponse.redirect(`https://www.paisasoch.com${path}`)
+  // 404 example (optional safety)
+  if (path.includes("atlantis")) {
+    return new NextResponse("404 Not Found", { status: 404 });
   }
 
-  // ✅ Allow calculators
-  if (path.startsWith('/calculators')) {
-    return NextResponse.redirect(`https://www.paisasoch.com${path}`)
-  }
-
-  // ❌ Everything else → 404
-  return new NextResponse('Not Found', { status: 404 })
+  return NextResponse.next();
 }
