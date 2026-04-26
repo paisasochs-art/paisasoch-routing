@@ -1,47 +1,59 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware(request) {
-  const url = request.nextUrl;
-  const path = url.pathname;
+const VALID_CITIES = new Set([
+  "mumbai","delhi","bangalore","hyderabad","chennai"
+  // extend later
+]);
 
-  // 1️⃣ ROOT PROTECTION (no SSR UI exposure)
-  if (path === "/") {
-    return NextResponse.redirect(
-      "https://www.paisasoch.com",
-      301
-    );
-  }
+function isValidCity(city: string) {
+  return VALID_CITIES.has(city);
+}
 
-  // 2️⃣ GOLD RATE ROUTE (allowed + redirected)
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  const path = pathname.toLowerCase().replace(/\/+$/, "");
+
+  // ✅ 1. GOLD RATE PAGE
   if (path.startsWith("/gold-rate-today/")) {
     const city = path.split("/")[2];
 
-    // Safety: ensure city exists
-    if (city) {
-      return NextResponse.redirect(
-        `https://www.paisasoch.com/gold-rate-today/${city}`,
-        301
-      );
+    if (!city || !isValidCity(city)) {
+      return new NextResponse("Not Found", { status: 404 });
     }
+
+    return NextResponse.next();
   }
 
-  // 3️⃣ ALLOW ONLY KNOWN PATTERNS (future scalable)
-  const allowedPatterns = [
-    /^\/gold-rate-today\/[^/]+$/,
-  ];
+  // ✅ 2. 301 REDIRECTS (variants)
+  if (
+    path.includes("18k-gold-price") ||
+    path.includes("22k-gold-price") ||
+    path.includes("24k-gold-price") ||
+    path.includes("10-gram-gold-price") ||
+    path.includes("1-gram-gold-price")
+  ) {
+    const city = path.split("-").pop();
 
-  const isAllowed = allowedPatterns.some((regex) =>
-    regex.test(path)
-  );
+    if (city && isValidCity(city)) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/gold-rate-today/${city}`;
+      return NextResponse.redirect(url, 301);
+    }
 
-  // 4️⃣ BLOCK EVERYTHING ELSE
-  if (!isAllowed) {
-    return new NextResponse("404 - Not Found", {
-      status: 404,
-      headers: { "content-type": "text/html" },
-    });
+    return new NextResponse("Gone", { status: 410 });
   }
 
-  // 5️⃣ FALLBACK (should rarely hit)
-  return NextResponse.next();
+  // ✅ 3. ALLOW ROOT + BASIC PAGES
+  if (
+    path === "/" ||
+    path.startsWith("/blog") ||
+    path.startsWith("/about")
+  ) {
+    return NextResponse.next();
+  }
+
+  // ❌ 4. BLOCK EVERYTHING ELSE
+  return new NextResponse("Not Found", { status: 404 });
 }
